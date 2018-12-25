@@ -1,0 +1,13 @@
+{
+    "eslint": {
+        "env": {
+            "node": true
+        },
+        "rules": {
+            "no-console": 0,
+            "fecs-no-require": 0,
+            "no-func-assign": 2,
+            "camelcase": 0
+        }
+    }
+}

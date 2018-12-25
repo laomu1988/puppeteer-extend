@@ -1,0 +1,27 @@
+{
+  "name": "puppeteer-extend",
+  "version": "0.0.1",
+  "description": "扩展ui测试工具puppeteer的方法，便于快速写测试示例",
+  "main": "src/index.js",
+  "scripts": {
+    "test-debug": "cross-env DEBUG=puppeteer-extend node test/test.js",
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laomu1988/puppeteer-extend.git"
+  },
+  "keywords": [
+    "puppeteer",
+    "e2e-test",
+    "ui-test"
+  ],
+  "author": "muzhilong",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "debug": "^4.1.0",
+    "puppeteer": "^1.11.0",
+    "require-dir": "^1.2.0"
+  }
+}
