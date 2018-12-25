@@ -36,7 +36,7 @@ module.exports = function findDom(target, box) {
             return null;
         }
     }
-    if (!box.querySelector) {
+    if (!box || !box.querySelector) {
         return null;
     }
     // text是css选择器
