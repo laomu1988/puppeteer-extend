@@ -1,9 +1,14 @@
 {
   "name": "puppeteer-extend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "扩展ui测试工具puppeteer的方法，便于快速写测试示例",
   "main": "src/index.js",
   "scripts": {
+    "release4": "standard-version --prerelease",
+    "release3": "standard-version --release-as patch",
+    "release2": "standard-version --release-as minor",
+    "release1": "standard-version --release-as major",
+    "release": "standard-version",
     "test-debug": "cross-env DEBUG=puppeteer-extend node test/test.js",
     "test": "node test/test.js"
   },
@@ -18,10 +23,16 @@
   ],
   "author": "muzhilong",
   "license": "ISC",
+  "dependencies": {
+    "require-dir": "^1.2.0"
+  },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "debug": "^4.1.0",
     "puppeteer": "^1.11.0",
-    "require-dir": "^1.2.0"
+    "@commitlint/cli": "^7.1.2",
+    "@commitlint/config-conventional": "^7.1.2",
+    "husky": "^1.1.2",
+    "standard-version": "^4.4.0"
   }
 }
