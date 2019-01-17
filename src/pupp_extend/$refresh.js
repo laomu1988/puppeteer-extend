@@ -11,8 +11,8 @@ async function $refresh() {
     await this.evaluate(() => {
         history.go(0);
     });
-    await this.waitFor(10);
     await this.waitForNavigation();
+    await this.waitFor(10);
 }
 
 module.exports = $refresh;
