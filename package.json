@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-extend",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "扩展ui测试工具puppeteer的方法，便于快速写测试示例",
   "main": "src/index.js",
   "scripts": {
