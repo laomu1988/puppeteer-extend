@@ -16,11 +16,10 @@ module.exports = function findDom(target, box) {
         throw new Error('findDom(target) need target as string');
     }
     box = box || document.body;
-    // 当selector是字符串时处理
+    // 当容器是字符串时处理
     if (typeof box === 'string') {
-        // 当selector是选择器
         try {
-            let doms = document.querySelectorAll(box);
+            let doms = window.$client.filterHidden(document.querySelectorAll(box));
             for (let i = doms.length - 1; i >= 0; i--) { // 从后向前查找，避免后面覆盖前面时查找到的是前面内容
                 let dom = findDom(target, doms[i]);
                 if (dom) {
@@ -41,7 +40,7 @@ module.exports = function findDom(target, box) {
     }
     // text是css选择器
     try {
-        let dom = box.querySelector(target);
+        let dom = window.$client.filterHidden(box.querySelectorAll(target))[0];
         if (dom) {
             return dom;
         }
