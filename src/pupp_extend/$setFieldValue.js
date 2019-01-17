@@ -12,7 +12,9 @@
  */
 module.exports = async function $setValue(label, value = '') {
     let input = await this.evaluate(function (label) {
-        let selector = window.$client.css(label);
+        let selector = window.$client.css(label)
+            || window.$client.css(label + ':')
+            || window.$client.css(label + '：');
         let dom = selector ? window.document.querySelector(selector) : null;
         if (!dom) {
             return null;

@@ -2,3 +2,4 @@ node_modules
 Chromium.app
 test/config.json
 test/result
+test/client.js

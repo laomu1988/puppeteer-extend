@@ -2,7 +2,7 @@
  * @file 汇总浏览器端函数
  * @author laomu1988
  */
-
+const fs = require('fs');
 const requireDir = require('require-dir');
 const clientExtend = requireDir(__dirname + '/client_extend');
 let func = `
@@ -24,5 +24,7 @@ let func = `
 for (let attr in clientExtend) {
     func += '$client.' + attr + ' = catchError(' + clientExtend[attr] + ');\n\n';
 }
+
+fs.writeFileSync(__dirname + '/../test/client.js', '(function() {' + func + ')()', 'utf8');
 
 module.exports = new Function(func);
