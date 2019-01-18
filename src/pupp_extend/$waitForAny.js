@@ -9,10 +9,10 @@
  *
  * @param {string} target1 第一个目标
  * @param {string} target2 第二个目标
- * @param {number} timeout 等待时间，单位ms，默认2000ms
+ * @param {number} timeout 等待时间，单位ms，默认5000ms
  * @return {string} 出现目标的文字或css选择器
  */
-async function $waitForAny(target1, target2, timeout = 2000) {
+async function $waitForAny(target1, target2, timeout = 5000) {
     let result = await this.waitForFunction(function (target1, target2) {
         if (!window.$client) {
             return false;

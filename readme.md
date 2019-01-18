@@ -49,8 +49,13 @@ const extend = require('puppeteer-extend');
         }
     });
     const page = extend(await broswer.newPage());
-    page.goto('https://www.baidu.com');
-    page.$click('百度一下');
+    await page.goto('https://www.baidu.com');
+    await page.$click('百度一下');
+
+    await page.$chain() // 开启链式操作
+        .goto('https://www.baidu.com')
+        $click('百度一下')
+        .end(); // 结束链式操作
 })();
 ```
 
@@ -71,10 +76,11 @@ const extend = require('puppeteer-extend');
 * $setFrom(form) 输入表单内容，例如{"标题": "标题内容", "备注": "备注内容"}
 * $setValue(label, value) 输入内容
 * $waitForAny(target1, target2) 等待任一目标出现
-* $waitFor(target) 等待目标出现
+* $waitFor(target, timeout) 等待目标出现
 * $waitForNot(target) 等待目标消失
 * $waitForNotLabel(target) 等待表单标签文字消失
 * $waitForLabel(target) 等待表单标签文字（和$waitFor区别是$waitForLabel可以查询到`target:`和`target：`）
+* $chain() 返回链式操作，最终需要调用end方法终止链操作
 
 
 注意：其中target可以是文字内容或者css选择器。当是文字内容时，会去除空格后和dom节点文字内容剔除空格后内容比较，只有完全相同才认为是目标节点。

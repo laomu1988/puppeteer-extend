@@ -7,7 +7,7 @@ const debug = require('debug')('puppeteer-extend');
 const client = require('./client_extend');
 const puttExtend = requireDir('./pupp_extend');
 
-const noClientMethods = ['$refresh'];
+const noClientMethods = ['$refresh', '$chain'];
 
 // 为puppeteer的页面绑定扩展函数
 function bindExtends(page, extend) {
