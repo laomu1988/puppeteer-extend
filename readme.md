@@ -84,3 +84,5 @@ const extend = require('puppeteer-extend');
 
 
 注意：其中target可以是文字内容或者css选择器。当是文字内容时，会去除空格后和dom节点文字内容剔除空格后内容比较，只有完全相同才认为是目标节点。
+
+## [修改记录](https://github.com/laomu1988/puppeteer-extend/blob/master/CHANGELOG.md)
