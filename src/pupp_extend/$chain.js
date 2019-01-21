@@ -16,7 +16,7 @@ function $chain() {
                     for (let i = 0; i < arr.length; i++) {
                         let attr = arr[i].method;
                         let args = arr[i].args;
-                        debug('$chain.' + attr, args);
+                        debug('$chain.' + attr + '(' + args.join(',') + ')');
                         if (!page[attr]) {
                             throw new Error(`Can NOT find method ${attr} on puppeteer page`);
                         }

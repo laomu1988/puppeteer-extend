@@ -19,20 +19,23 @@ function bindExtends(page, extend) {
             // 绑定扩展函数，执行前务必确认已注入$client
             page[attr] = async function (...args) {
                 debug(attr, ...args);
-                await page.evaluate(client);
+                await injectClient(page);
                 return await extend[attr].apply(page, args);
             };
         }
     }
 }
 
-module.exports = function (page, logHandle) {
+module.exports = function (page, logHandle, selfExtend) {
     bindExtends(page, puttExtend);
+    if (selfExtend) {
+        bindExtends(page, selfExtend);
+    }
     logHandle = logHandle || console.log.bind(console);
     // 注入client脚本
     page.on('framenavigated', async function (frame) {
         logHandle('[framenavigated]', frame.url());
-        await frame.evaluate(client);
+        await injectClient(frame);
         logHandle('[framenavigated-inject]', frame.url());
     });
 
@@ -66,3 +69,23 @@ module.exports = function (page, logHandle) {
     });
     return page;
 };
+
+
+async function injectClient(page, times = 0) {
+    try {
+        await page.evaluate(client);
+    }
+    catch (err) {
+        if (times > 5) {
+            throw new Error('Repeat Error:' + err.message);
+        }
+        if (err.message === 'Execution context was destroyed, most likely because of a navigation.') {
+            debug('injectError because navigation');
+            await page.waitForNavigation();
+            await injectClient(page, times + 1);
+        }
+        else {
+            throw err;
+        }
+    }
+}
