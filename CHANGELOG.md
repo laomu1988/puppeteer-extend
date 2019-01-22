@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0-1"></a>
+# [0.1.0-1](https://github.com/laomu1988/puppeteer-extend/compare/v0.1.0-0...v0.1.0-1) (2019-01-22)
+
+
+### Bug Fixes
+
+* 修复当页面跳转时执行函数抛出错误“Execution context was destroyed, most likely because of a navigation.” ([ee4c413](https://github.com/laomu1988/puppeteer-extend/commit/ee4c413))
+
+
+### Features
+
+* 注入可执行函数时假如页面正在跳转则等待页面跳转;链式操作未执行end时抛出错误；page注入函数增加beforeEach参数 ([a5ec03f](https://github.com/laomu1988/puppeteer-extend/commit/a5ec03f))
+
+
+
 <a name="0.1.0-0"></a>
 # [0.1.0-0](https://github.com/laomu1988/puppeteer-extend/compare/v0.0.3...v0.1.0-0) (2019-01-18)
 
