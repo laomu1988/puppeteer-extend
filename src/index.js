@@ -7,10 +7,10 @@ const debug = require('debug')('puppeteer-extend');
 const client = require('./client_extend');
 const puttExtend = requireDir('./pupp_extend');
 
-const noClientMethods = ['$refresh', '$chain'];
+const noClientMethods = ['$chain'];
 
 // 为puppeteer的页面绑定扩展函数
-function bindExtends(page, extend) {
+function bindExtends(page, extend, beforeEach) {
     for (let attr in extend) {
         if (noClientMethods.indexOf(attr) >= 0) {
             page[attr] = extend[attr].bind(page);
@@ -20,16 +20,27 @@ function bindExtends(page, extend) {
             page[attr] = async function (...args) {
                 debug(attr, ...args);
                 await injectClient(page);
+                if (typeof beforeEach === 'function') {
+                    await beforeEach.call(page, page, attr, args);
+                }
                 return await extend[attr].apply(page, args);
             };
         }
     }
 }
 
-module.exports = function (page, logHandle, selfExtend) {
-    bindExtends(page, puttExtend);
-    if (selfExtend) {
-        bindExtends(page, selfExtend);
+module.exports = function (page, options) {
+    let {
+        logHandle,
+        extend,
+        beforeEach
+    } = options && typeof options === 'object' ? options : {};
+    if (typeof options === 'function') {
+        logHandle = options;
+    }
+    bindExtends(page, puttExtend, beforeEach);
+    if (extend) {
+        bindExtends(page, extend, beforeEach);
     }
     logHandle = logHandle || console.log.bind(console);
     // 注入client脚本
@@ -81,8 +92,16 @@ async function injectClient(page, times = 0) {
         }
         if (err.message === 'Execution context was destroyed, most likely because of a navigation.') {
             debug('injectError because navigation');
-            await page.waitForNavigation();
-            await injectClient(page, times + 1);
+            try {
+                await page.waitForSelector('body');
+                await injectClient(page, times + 1);
+            }
+            catch (err) {
+                if (err.message && err.message.indexOf('because browser has disconnected') >= 0) {
+                    return;
+                }
+                throw err;
+            }
         }
         else {
             throw err;

@@ -24,7 +24,8 @@
   "author": "muzhilong",
   "license": "ISC",
   "dependencies": {
-    "require-dir": "^1.2.0"
+    "require-dir": "^1.2.0",
+    "tree-kill": "^1.2.1"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
