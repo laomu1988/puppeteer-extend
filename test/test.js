@@ -2,11 +2,10 @@
  * @file 测试示例总入口
  * @author muzhilong
  */
-const puppeteer = require('puppeteer');
+const pptr = require('../src/init');
 const path = require('path');
 const requireDir = require('require-dir');
 const fs = require('fs');
-const extend = require('../src/index');
 const config = require('./config');
 const login = require('./login');
 const cases = requireDir(__dirname + '/cases/'); // case列表
@@ -35,7 +34,10 @@ for (let attr in cases) {
         fs.mkdirSync(config.result);
     }
 
-    const browser = await init();
+    const browser = await pptr({
+        executablePath: path.join(__dirname, '../Chromium.app/Contents/MacOS/Chromium'),
+        headless: headless
+    });
     const page = await browser.newPage();
     try {
         console.time('all');
@@ -43,7 +45,7 @@ for (let attr in cases) {
             let one = list[i];
             console.log('Start Case: ' + one.attr + ' -----------');
             console.time(one.attr);
-            await one.method(page);
+            await one.method(page, browser);
             console.timeEnd(one.attr);
             await page.screenshot({path: config.result + '/' + one.attr + '.png'});
             await page.$pause(10);
@@ -56,21 +58,3 @@ for (let attr in cases) {
     }
     await browser.browser.close();
 })();
-
-
-// 初始化测试系统
-async function init() {
-    let browser = await puppeteer.launch({
-        executablePath: path.join(__dirname, '../Chromium.app/Contents/MacOS/Chromium'),
-        headless: headless,
-        ignoreHTTPSErrors: true,
-        defaultViewport: {
-            width: 1280,
-            height: 900
-        }
-    });
-    return {
-        browser: browser,
-        newPage: async () => extend(await browser.newPage(), () => {})
-    };
-}

@@ -3,7 +3,6 @@
  */
 
 module.exports = async page => {
-    console.log('chain:', page.$chain());
     await page
         .$chain()
         .$hash('/agent')

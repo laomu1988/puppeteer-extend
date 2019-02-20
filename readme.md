@@ -81,6 +81,8 @@ const extend = require('puppeteer-extend');
 * $waitForNotLabel(target) 等待表单标签文字消失
 * $waitForLabel(target) 等待表单标签文字（和$waitFor区别是$waitForLabel可以查询到`target:`和`target：`）
 * $chain() 返回链式操作，最终需要调用end方法终止链操作
+* $nextWindow() 切换到下一个窗口页面
+* $prevWindow() 切换到上一个窗口页面
 
 
 注意：其中target可以是文字内容或者css选择器。当是文字内容时，会去除空格后和dom节点文字内容剔除空格后内容比较，只有完全相同才认为是目标节点。

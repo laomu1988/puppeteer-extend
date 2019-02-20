@@ -2,6 +2,8 @@
  * @file Puppeteer扩展函数
  * @author laomu1988
  */
+/* eslint-disable fecs-camelcase */
+const pkg = require('../package.json');
 const requireDir = require('require-dir');
 const debug = require('debug')('puppeteer-extend');
 const client = require('./client_extend');
@@ -30,6 +32,11 @@ function bindExtends(page, extend, beforeEach) {
 }
 
 module.exports = function (page, options) {
+    if (page.__extend_version === pkg.version) {
+        return page;
+    }
+    page.__extend_version = pkg.version;
+
     let {
         logHandle,
         extend,
